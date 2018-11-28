@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hans" class="loading">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Cycle &#39; 个人博客 - 一切源于技术</title>
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate">
+    <meta name="keywords" content="IT，菜鸟程序猿,"> 
+    <meta name="description" content="Cycle的个人博客, 
+ 智慧源于勤奋，伟大出自平凡。
+"> 
+    <meta name="author" content="Cycle"> 
+    <link rel="alternative" href="atom.xml" title="Cycle &#39; 个人博客" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+</head>
+</html>
+<body class="loading">
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">Java基础数据类型与包装类</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+    <div class="section">
+        <div class="article">
+    <div class="main">
+        <h1 class="title">Java基础数据类型与包装类</h1>
+        <div class="stuff">
+            <span>九月 20, 2018</span>
+            
+  <ul class="post-tags-list"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Java/">Java</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>这篇的主题是基础中的基础了，所以也很容易被人忽略（包括我也是），最近刷起题来才发现细枝末节的东西很多，还是要理一理。</p>
+<h4 id="一、基本数据类型"><a href="#一、基本数据类型" class="headerlink" title="一、基本数据类型"></a>一、基本数据类型</h4><p>Java提供了八种基本类型，六种数值类型（四个整型，两个浮点型），一种字符型，还有一种布尔型。</p>
+<h4 id="byte："><a href="#byte：" class="headerlink" title="byte："></a>byte：</h4><p>  byte 数据类型是8位、有符号的以二进制补码表示的整数；<br>  最小值是 -128（-2^7）；<br>  最大值是 127（2^7-1）；<br>  默认值是 0；<br>  byte 类型用在大型数组中节约空间，主要代替整数，因为 byte 变量占用的空间只有 int 类型的四分之一；<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">例子：byte a = 100；byte b = -50；</span><br></pre></td></tr></table></figure></p>
+<h4 id="short："><a href="#short：" class="headerlink" title="short："></a>short：</h4><p>  short 数据类型是 16 位、有符号的以二进制补码表示的整数；<br>  最小值是 -32768（-2^15）；<br>  最大值是 32767（2^15 - 1）；<br>  Short 数据类型也可以像 byte 那样节省空间。一个short变量是int型变量所占空间的二分之一；<br>  默认值是 0；<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">例子：short s = 1000；short r = -20000；</span><br></pre></td></tr></table></figure></p>
+<h4 id="int："><a href="#int：" class="headerlink" title="int："></a>int：</h4><p>  int 数据类型是32位、有符号的以二进制补码表示的整数；<br>  最小值是 -2,147,483,648（-2^31）；<br>  最大值是 2,147,483,647（2^31 - 1）；<br>  一般地整型变量默认为 int 类型；<br>  默认值是 0 ；<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">例子：int a = 100000；int b = -200000；</span><br></pre></td></tr></table></figure></p>
+<h4 id="long："><a href="#long：" class="headerlink" title="long："></a>long：</h4><p>  long 数据类型是 64 位、有符号的以二进制补码表示的整数；<br>  最小值是 -9,223,372,036,854,775,808（-2^63）；<br>  最大值是 9,223,372,036,854,775,807（2^63 -1）；<br>  这种类型主要使用在需要比较大整数的系统上；<br>  默认值是 0L；<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">例子： long a = 100000L；Long b = -200000L；</span><br></pre></td></tr></table></figure></p>
+<p>  “L”理论上不分大小写，但是若写成”l”容易与数字”1”混淆，不容易分辩。所以最好大写。</p>
+<h4 id="float："><a href="#float：" class="headerlink" title="float："></a>float：</h4><p>  float 数据类型是单精度、32位、符合IEEE 754标准的浮点数；<br>  float 在储存大型浮点数组的时候可节省内存空间；<br>  默认值是 0.0f；<br>  浮点数不能用来表示精确的值，如货币；<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">例子：<span class="built_in">float</span> f1 = 234.5f；</span><br></pre></td></tr></table></figure></p>
+<h4 id="double："><a href="#double：" class="headerlink" title="double："></a>double：</h4><p>  double 数据类型是双精度、64 位、符合IEEE 754标准的浮点数；<br>  浮点数的默认类型为double类型；<br>  double类型同样不能表示精确的值，如货币；<br>  默认值是 0.0d；<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">例子：double d1 = 123.4；</span><br></pre></td></tr></table></figure></p>
+<h4 id="boolean："><a href="#boolean：" class="headerlink" title="boolean："></a>boolean：</h4><p>  boolean数据类型表示1位的信息；<br>  只有两个取值：true 和 false；<br>  这种类型只作为一种标志来记录 true/false 情况；<br>  默认值是 false；<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">例子：boolean one = <span class="literal">true</span>；</span><br></pre></td></tr></table></figure></p>
+<h4 id="char："><a href="#char：" class="headerlink" title="char："></a>char：</h4><p>  char类型是一个单一的 16 位 Unicode 字符；<br>  最小值是 \u0000（即为0）；<br>  最大值是 \uffff（即为65,535）；<br>  char 数据类型可以储存任何字符；<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">例子：char letter = ‘A’；</span><br></pre></td></tr></table></figure></p>
+<p>注：<br>&nbsp;&nbsp;&nbsp;&nbsp; 整型默认为int类型，但如果将一个较小的整数值（在byte或short类型的表数范围内）赋给一个byte或short变量，系统会自动把这个整数值当成byte或者short类型来处理。<br>&nbsp;&nbsp;&nbsp;&nbsp; 如果使用一个很大的整数值（超出int类型的表数范围）时，Java不会自动把这个整数值当成long类型来处理，如果希望把它当成long类型来处理推荐在整数值后加字母L作为后缀。<br>&nbsp;&nbsp;&nbsp;&nbsp; Java整数值有四种表示形式：十进制，二进制（0b或0B开头），八进制（0开头），十六进制（0x或0X开头，其中10~15分别以a~f来表示）。<br>&nbsp;&nbsp;&nbsp;&nbsp; 浮点型默认为较精确的double，如果想使用float应在浮点数后加上尾缀f或F。<br>&nbsp;&nbsp;&nbsp;&nbsp; 浮点型是不精确的，不能对浮点型进行精确比较，也不能作为switch语句判断条件。</p>
+<h4 id="二、基本类型的类型转换"><a href="#二、基本类型的类型转换" class="headerlink" title="二、基本类型的类型转换"></a>二、基本类型的类型转换</h4><h5 id="1-自动类型转换"><a href="#1-自动类型转换" class="headerlink" title="1. 自动类型转换"></a>1. 自动类型转换</h5><p>注：<br>&nbsp;&nbsp;&nbsp;&nbsp; 基本数据类型中，布尔类型boolean占有一个字节，由于其本身所代码的特殊含义，boolean类型与其他基本类型不能进行类型的转换（既不能进行自动类型的提升，也不能强制类型转换）， 否则将编译出错。<br>&nbsp;&nbsp;&nbsp;&nbsp; byte，char，short虽然类型从小到大自动转换，但是byte不能转成char，char也不能转成short。因为byte和short是数值型的变量，char字符型的变量。数值型变量有符号（第一位）而在char中则无正负之分。byte转short自然就是可以的了。</p>
+<h5 id="2-强制类型转换"><a href="#2-强制类型转换" class="headerlink" title="2. 强制类型转换"></a>2. 强制类型转换</h5><p>&nbsp;&nbsp;&nbsp;&nbsp; 如果将上图箭头右边的值转换为左边的值就需要强制类型转换，原因很简单，右边表示的范围大，左边表示的范围小。 当进行强制类型转换时，类似于把一个大瓶子的水倒入小瓶子，如果大瓶子的水不多还好，但如果大瓶子里的水很多就会引起溢出，造成数据丢失。<br>&nbsp;&nbsp;&nbsp;&nbsp;《疯狂Java讲义》中有个很好的例子说明强制类型转换后数值是如何改变的，在这贴出来做个记录。</p>
+<h5 id="3-表达式类型的自动提升"><a href="#3-表达式类型的自动提升" class="headerlink" title="3. 表达式类型的自动提升"></a>3. 表达式类型的自动提升</h5><p>&nbsp;&nbsp;&nbsp;&nbsp; 当一个算术表达式中包含多个基本类型的值时，整个算术表达式的数据类型将发生自动提升。Java定义了如下的自动提升规则。<br>&nbsp;&nbsp;&nbsp;&nbsp; 所有的byte类型、short类型和char类型将被提升到int类型。<br>&nbsp;&nbsp;&nbsp;&nbsp; 整个算术表达式的数据类型自动提升到与表达式中最高等级操作数同样的类型。<br>面试陷阱<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">byte b1 = 10;</span><br><span class="line">byte b2 = 11;</span><br><span class="line">//错误: 不兼容的类型: 从int转换到byte可能会有损失</span><br><span class="line">//否则，两个操作数都将转换为int类型。</span><br><span class="line">byte b3 = b1 + b2 //错误</span><br><span class="line">byte b3 = (byte)(b1 + b2); //正确</span><br><span class="line">short s1 = 1; </span><br><span class="line">s1 = s1 + 1; //错误: 不兼容的类型: 从int转换到short可能会有损失</span><br><span class="line">short s2 = 1; </span><br><span class="line">s2 += 1; // 等同于short s2 = (short)(s2 + (short)1); //正确</span><br></pre></td></tr></table></figure></p>
+<h4 id="三、包装类"><a href="#三、包装类" class="headerlink" title="三、包装类"></a>三、包装类</h4><p>&nbsp;&nbsp;&nbsp;&nbsp; 为了满足Java语言面向对象的这一特性，上述基本数据类型中的每一个在java.lang包中都有一个包装类，即将每个基本类型都包装成了一个类。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">基本数据类型 &amp; 包装类</span><br><span class="line">byte &amp; Byte</span><br><span class="line">boolean &amp; Boolean</span><br><span class="line">short &amp; Short</span><br><span class="line">char &amp; Character</span><br><span class="line">int &amp; Integer</span><br><span class="line">long &amp; Long</span><br><span class="line"><span class="built_in">float</span> &amp; Float</span><br><span class="line">double &amp; Double</span><br></pre></td></tr></table></figure></p>
+<p>对于包装类说，这些类的用途主要包含三种：<br>&nbsp;&nbsp;&nbsp;&nbsp; 集合不允许存放基本数据类型，故常用包装类。<br>&nbsp;&nbsp;&nbsp;&nbsp; 作为和基本数据类型对应的类类型存在，方便涉及到对象的操作。<br>&nbsp;&nbsp;&nbsp;&nbsp; 包含每种基本数据类型的相关属性如最大值、最小值等，以及相关的操作方法。</p>
+<h5 id="1-基本类型与包装类型之间的转换"><a href="#1-基本类型与包装类型之间的转换" class="headerlink" title="1. 基本类型与包装类型之间的转换"></a>1. 基本类型与包装类型之间的转换</h5><p>&nbsp;&nbsp;&nbsp;&nbsp; JDK自从1.5版本以后，就引入了自动拆装箱的语法，也就是在进行基本数据类型和对应的包装类转换时，系统将自动进行，这将大大方便我们的代码书写。使用示例代码如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//自动装箱</span><br><span class="line">int m = 10;</span><br><span class="line">Integer <span class="keyword">in</span> = m;</span><br><span class="line">System.out.println(<span class="keyword">in</span>); //10</span><br><span class="line"></span><br><span class="line">//自动拆箱</span><br><span class="line">Integer inn = new Integer(10);</span><br><span class="line">int n = inn;</span><br><span class="line">System.out.println(n); //10</span><br></pre></td></tr></table></figure></p>
+<h5 id="2-字符串和基本类型之间的转换"><a href="#2-字符串和基本类型之间的转换" class="headerlink" title="2. 字符串和基本类型之间的转换"></a>2. 字符串和基本类型之间的转换</h5><p>&nbsp;&nbsp; (1) 基本类型转换成字符串类型<br>&nbsp;&nbsp;&nbsp;&nbsp; 包装类的toString()方法。<br>&nbsp;&nbsp;&nbsp;&nbsp; String 类的valueOf()方法。<br>&nbsp;&nbsp;&nbsp;&nbsp; 空字符串加一个基本类型变量。<br>&nbsp;&nbsp; (2) 字符串类型转换成基本类型<br>&nbsp;&nbsp;&nbsp;&nbsp; 包装类的parseXxx()静态方法。<br>&nbsp;&nbsp;&nbsp;&nbsp; 包装类的valueOf()方法。</p>
+<h5 id="3-包装类中“-”与equals的用法比较"><a href="#3-包装类中“-”与equals的用法比较" class="headerlink" title="3. 包装类中“==”与equals的用法比较"></a>3. 包装类中“==”与equals的用法比较</h5><p>&nbsp;&nbsp;&nbsp;&nbsp; 值得注意的是，包装类中的equals方法和String类一样，都是重写了Object类中的equals方法，因此比较的是内容而不是地址，而“==”比较的依然是引用变量的地址，只是当包装类型和与之相对应的基本类型进行“==”比较时会先做自动拆箱处理。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public static void <span class="function"><span class="title">equalsTest</span></span>() &#123;</span><br><span class="line">        // TODO Auto-generated method stub</span><br><span class="line">        Integer a = new Integer(-100);</span><br><span class="line">        Integer b = new Integer(-100);</span><br><span class="line">        int c = -100;</span><br><span class="line">        System.out.println(a == b);//<span class="literal">false</span></span><br><span class="line">        System.out.println(a == c);//<span class="literal">true</span></span><br><span class="line">        System.out.println(b == c);//<span class="literal">true</span></span><br><span class="line"></span><br><span class="line">        System.out.println(a.equals(b));//<span class="literal">true</span></span><br><span class="line"></span><br><span class="line">        String s1 = new String(<span class="string">"hello"</span>);</span><br><span class="line">        String s2 = new String(<span class="string">"hello"</span>);</span><br><span class="line">        System.out.println(s1 == s2);//<span class="literal">false</span></span><br><span class="line">        System.out.println(s1.equals(s2));//<span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h5 id="4-包装类的常量池"><a href="#4-包装类的常量池" class="headerlink" title="4. 包装类的常量池"></a>4. 包装类的常量池</h5><p>&nbsp;&nbsp;&nbsp;&nbsp; 既然提到String类，必须说说包装类和String类一样，JVM也为其提供了常量池，下面代码具体说明：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 8种基本类型的包装类和对象池</span><br><span class="line"> *         包装类：java提供的为原始数据类型的封装类，如：int(基本数据类型)，Integer封装类。</span><br><span class="line"> *         对象池：为了一定程度上减少频繁创建对象，将一些对象保存到一个<span class="string">"容器"</span>中。</span><br><span class="line"> * </span><br><span class="line"> *     Byte,Short,Integer,Long,Character。这5种整型的包装类的对象池范围在-128~127之间，也就是说，</span><br><span class="line"> *     超出这个范围的对象都会开辟自己的堆内存。</span><br><span class="line"> * </span><br><span class="line"> *  Boolean也实现了对象池技术。Double,Float两种浮点数类型的包装类则没有实现。</span><br><span class="line"> *     String也实现了常量池技术。</span><br><span class="line"> * </span><br><span class="line"> * 自动装箱拆箱技术</span><br><span class="line"> *     JDK5.0及之后允许直接将基本数据类型的数据直接赋值给其对应地包装类。</span><br><span class="line"> *  如：Integer i = 3;（这就是自动装箱）</span><br><span class="line"> *  实际编译代码是：Integer i=Integer.valueOf(3); 编译器自动转换</span><br><span class="line"> *     自动拆箱则与装箱相反：int i = (Integer)5;</span><br><span class="line"> */</span><br><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line"></span><br><span class="line">        //基本数据类型常量池范围-128~127</span><br><span class="line">        Integer n1 = -129;</span><br><span class="line">        Integer n2 = -129;</span><br><span class="line">        Long n3 = 100L;</span><br><span class="line">        Long n4 = 100L;</span><br><span class="line">        Double n5 =  12.0;</span><br><span class="line">        Double n6 = 12.0;</span><br><span class="line">        //<span class="literal">false</span></span><br><span class="line">        System.out.println(n1 == n2);</span><br><span class="line">        //<span class="literal">true</span></span><br><span class="line">        System.out.println(n3 == n4);</span><br><span class="line">        //<span class="literal">false</span></span><br><span class="line">        System.out.println(n5 == n6);</span><br><span class="line"></span><br><span class="line">        //String常量池技术,注意：这里String不是用new创建的对象</span><br><span class="line">        String str1 = <span class="string">"abcd"</span>;</span><br><span class="line">        String str2 = <span class="string">"abcd"</span>;</span><br><span class="line">        //<span class="literal">true</span></span><br><span class="line">        System.out.println(str1 == str2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这篇Java基本数据类型与包装类到这就更完了，没想到小细节是真得多，最后感谢上述出现过的帖子的作者stormjie博主。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        <li title="0" data-url="http://url.mcvmc.com/kuwo.php/27101590.mp3"></li>
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link" data-ae="false" data-ci="a015251c09fc28e8ffe3" data-cs="e97267f0861faffdb7dece1438080df13bb45dd3" data-r="cyclechang.github.io" data-o="cyclechang" data-a="cyclechang" data-d="true">查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>
