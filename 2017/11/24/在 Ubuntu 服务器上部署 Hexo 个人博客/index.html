@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hans" class="loading">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Cycle &#39; 个人博客 - 一切源于技术</title>
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate">
+    <meta name="keywords" content="IT，菜鸟程序猿,"> 
+    <meta name="description" content="Cycle的个人博客, 
+ 智慧源于勤奋，伟大出自平凡。
+"> 
+    <meta name="author" content="Cycle"> 
+    <link rel="alternative" href="atom.xml" title="Cycle &#39; 个人博客" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+</head>
+</html>
+<body class="loading">
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">在 Ubuntu 服务器上部署 Hexo 个人博客</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+    <div class="section">
+        <div class="article">
+    <div class="main">
+        <h1 class="title">在 Ubuntu 服务器上部署 Hexo 个人博客</h1>
+        <div class="stuff">
+            <span>十一月 24, 2017</span>
+            
+  <ul class="post-tags-list"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/技术博文/">技术博文</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h4 id="为什么要搭建自己的个人博客呢？"><a href="#为什么要搭建自己的个人博客呢？" class="headerlink" title="为什么要搭建自己的个人博客呢？"></a><b>为什么要搭建自己的个人博客呢？</b></h4><h5 id="写博客对于程序员来说至关重要，为什么这么说呢？写博客有很多好处："><a href="#写博客对于程序员来说至关重要，为什么这么说呢？写博客有很多好处：" class="headerlink" title="写博客对于程序员来说至关重要，为什么这么说呢？写博客有很多好处："></a>写博客对于程序员来说至关重要，为什么这么说呢？写博客有很多好处：</h5><p>&nbsp;&nbsp;&nbsp;其一是它能够迫使你总结你学习的知识，你需不但的消化自己的知识点，使你对知识有了更深刻的认识；<br>&nbsp;&nbsp;&nbsp;其二是你的博客如同你的个人简历，记录了你的学习历程，通过写博客，可以让别人认识你，可以结交更多的行业朋友；<br>&nbsp;&nbsp;&nbsp;其三，博客起到了传播知识的作用，特别是技术类的博客能够帮助别人解决技术问题，帮助人是一件快乐的事，何乐而不为。</p>
+<p>· 本文将介绍如何在一台 Ubuntu 的 CVM 云服务器上快速部署 Hexo 博客站点，如何快速发布一篇博文并通过云服务器上的私有 Git 仓库部署到 Web 服务器目录下。<br>（前提是已经有一台个人云服务器，若是没有自己的服务器，想要搭建个人博客，可以参考上一篇文章利用 Github 去搭建）</p>
+<h4 id="1-云端服务器配置"><a href="#1-云端服务器配置" class="headerlink" title="1. 云端服务器配置"></a><b>1. 云端服务器配置</b></h4><p>在下面的操作之前，请确保已经购买了一台云服务器，并且能够以 ubuntu 用户身份正常登陆。</p>
+<p>在这部分，要完成以下件事情：</p>
+<ol>
+<li>为本地的 hexo_blog 配置一个部署静态文件的远程仓库。<br>许多教程均以 Github 作为中转的平台，但是会让整个流程变得更为复杂，而且会受服务器与 Github 之间网络情况的影响。假如 Github 宕机或者被封，你将无法更新博客。</li>
+<li>配置 Nginx 托管博客文件目录。</li>
+<li>配置远程仓库自动更新到博客文件目录的钩子。</li>
+</ol>
+<p><b>1.1 创建私有 Git 仓库</b><br>在 /var/repo/ 下，创建一个名为 hexo_static 的裸仓库（bare repo）。</p>
+<p>如果没有 /var/repo 目录，需要先创建；然后修改目录的所有权和用户权限，之后 ubuntu 用户都具备 /var/repo 目录下所有新生成的目录和文件的权限。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir /var/repo/</span><br><span class="line">sudo chown -R <span class="variable">$USER</span>:<span class="variable">$USER</span> /var/repo/</span><br><span class="line">sudo chmod -R 755 /var/repo/</span><br></pre></td></tr></table></figure></p>
+<p>然后，执行如下命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /var/repo/</span><br><span class="line">git init --bare hexo_static.git</span><br></pre></td></tr></table></figure></p>
+<p><b>1.2 配置 Nginx 托管文件目录</b><br>接下来，创建 /var/www/hexo 目录，用于 Nginx 托管。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir -p /var/www/hexo</span><br></pre></td></tr></table></figure></p>
+<p>和上一步类似，这里也需要修改目录的所有权和权限。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R <span class="variable">$USER</span>:<span class="variable">$USER</span> /var/www/hexo</span><br><span class="line">sudo chmod -R 755 /var/www/hexo</span><br></pre></td></tr></table></figure></p>
+<p>然后，修改 Nginx 的 default 设置：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/nginx/sites-enabled/default</span><br></pre></td></tr></table></figure></p>
+<p>将其中的 root 指令指向 /var/www/hexo 目录。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen 80 default_server;</span><br><span class="line">    listen [::]:80 default_server ipv6only=on;</span><br><span class="line"></span><br><span class="line">    root /var/www/hexo; <span class="comment"># 需要修改的部分</span></span><br><span class="line">    index index.html index.htm;</span><br><span class="line"></span><br><span class="line">    server_name www.cyclechang.top <span class="comment"># 填写服务器的域名（没有可不填）</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>保存并退出文件。如果以后购买并备案域名之后，可以再将配置中的 default_server 修改为你的域名。</p>
+<p>最后，重启 Nginx 服务，使得改动生效。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service nginx restart</span><br></pre></td></tr></table></figure></p>
+<p>做完这一步之后，你去访问服务器的 IP 时，应该还是会报错的，因为 /var/www/hexo 目录是空的。</p>
+<p><b>1.3 创建 Git 钩子</b><br>接下来，在服务器上的裸仓库 hexo_static 创建一个钩子，在满足特定条件时将静态 HTML 文件传送到 Web 服务器的目录下，即 /var/www/hexo。</p>
+<p>在自动生成的 hooks 目录下创建一个新的钩子文件：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /var/repo/hexo_static.git/hooks/post-receive</span><br></pre></td></tr></table></figure></p>
+<p>在该文件中添加两行代码，指定 Git 的工作树（源代码）和 Git 目录（配置文件等）。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">git --work-tree=/var/www/hexo --git-dir=/var/repo/hexo_static.git checkout -f</span><br></pre></td></tr></table></figure></p>
+<p>保存并退出文件，并让该文件变为可执行文件。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x /var/repo/hexo_static.git/hooks/post-receive</span><br></pre></td></tr></table></figure></p>
+<p>至此，服务端的配置基本结束。</p>
+<h4 id="2-本地-Hexo-安装及初始化"><a href="#2-本地-Hexo-安装及初始化" class="headerlink" title="2. 本地 Hexo 安装及初始化"></a><b>2. 本地 Hexo 安装及初始化</b></h4><p>Hexo 可以说是目前最流行的博客框架了，基于Nodejs，更多信息可以google，下面需要安装的工具包括 Git，Nodejs，Hexo。（Windows 用户自行搜索这些工具，直接安装即可，试过基本没啥问题）</p>
+<p><b>2.1 安装Git</b><br>&nbsp;&nbsp;如果已安装HomeBrew 无需执行此行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ /usr/bin/ruby -e <span class="string">"<span class="variable">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)</span>"</span></span><br><span class="line">$ brew install git   // 安装Git</span><br></pre></td></tr></table></figure>
+<p>你也可以通过下载安装程序来安装</p>
+<p><b>2.2 安装Nodejs</b><br>  2.2.1 先安装nvm，这是Nodejs版本管理器，可以轻松切换Nodejs版本。 这里有两种方式安装。如果使用curl的方式安装，安装完成之后一定要重启终端。<br>  (1) Homebrew 安装方式，此安装方式无需重启<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ brew install nvm</span><br><span class="line">$ mkdir ~/.nvm</span><br><span class="line">$ <span class="built_in">export</span> NVM_DIR=~/.nvm</span><br><span class="line">$ . $(brew --prefix nvm)/nvm.sh</span><br></pre></td></tr></table></figure></p>
+<p>  (2) curl安装方式<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl https://raw.github.com/creationix/nvm/master/install.sh | sh</span><br></pre></td></tr></table></figure></p>
+<p>安装完成后，重启终端 并执行下列命令即可安装 Node.js。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nvm install 4</span><br></pre></td></tr></table></figure></p>
+<p>  2.2.2 安装Hexo，以上所有都安装完成之后再安装Hexo<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo npm install hexo-cli -g</span><br></pre></td></tr></table></figure></p>
+<p>所有必须工具已经安装完成，下面我们就可以生成博客，上传至我们的服务器了。</p>
+<h4 id="3-编写文章，发布至服务器"><a href="#3-编写文章，发布至服务器" class="headerlink" title="3. 编写文章，发布至服务器"></a><b>3. 编写文章，发布至服务器</b></h4><p>在第三部分的操作中，我们将完成以下任务：</p>
+<ol>
+<li>修改 Hexo 配置中的 URL，更改一些自定义的配置，或者加上自己喜欢的主题</li>
+<li>新建第一篇博客文章，并发布</li>
+<li>配置自动部署到服务器端的 hexo_static 裸仓库</li>
+</ol>
+<p>创建博客<br>将下面的 username 替换成你自己的username(其实也无所谓，作者强迫症)，执行成功后，会创建出一个名为 username.hexo 的文件夹。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init username.hexo</span><br></pre></td></tr></table></figure></p>
+<p>更改配置<br>主题安装<br>  为了使博客不太难看，我们需要安装一个主题，切换至刚刚生成的Hexo 目录，安装主题<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> username.hexo</span><br><span class="line">$ git <span class="built_in">clone</span> https://github.com/iissnan/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure></p>
+<p>  这里选了一个极简的主题，也是Hexo众多主题中最受欢迎的一个。上面出现的喵神的主题 在这里。Hexo也有更多主题供你选择。<br>  基础配置：打开文件位置username.hexo/_config.yml修改几个键值对，下面把几个必须设置的列出来按需求修改，记得保存， 还有注意配置的键值之间一定要有空格。更多设置…<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">title: Cycle <span class="string">' 个人博客 //你博客的名字</span></span><br><span class="line"><span class="string">author: dimsky //你的名字</span></span><br><span class="line"><span class="string">language: zh-Hans //语言 中文</span></span><br><span class="line"><span class="string">url: http://server-ip # 没有绑定域名时填写服务器的实际 IP 地址。</span></span><br><span class="line"><span class="string">root: '</span><span class="string">'</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">theme: next //刚刚安装的主题名称</span></span><br><span class="line"><span class="string">deploy:</span></span><br><span class="line"><span class="string">  type: git //使用Git 发布</span></span><br><span class="line"><span class="string">  repo: root@服务器IP:/var/repo/hexo_static //服务器上已创建的Git目录</span></span><br><span class="line"><span class="string">  branch: master</span></span><br></pre></td></tr></table></figure></p>
+<p>主题配置：<br>  主题配置文件在username.hexo/themes/next/_config.yml中修改，这里略过设置详情</p>
+<p>写文章<br>所有基础框架都已经创建完成，接下来可以开始写你的第一篇博客了<br>在username.hexo/source/_posts下创建你的第一个博客吧，例如，创建一个名为FirstNight.md的文件，用Markdown大肆发挥吧，注意保存。</p>
+<h5 id="如："><a href="#如：" class="headerlink" title="如："></a>如：</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: First Night</span><br><span class="line">---</span><br><span class="line">&gt; 我有一头**小毛驴**，可是我从来都不骑。</span><br></pre></td></tr></table></figure>
+<p>测试<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo s</span><br></pre></td></tr></table></figure></p>
+<p>测试服务启动，你可以在浏览器中输入 <a href="https://localhost:4000" target="_blank" rel="noopener">https://localhost:4000</a> 访问了。</p>
+<p>安装hexo-deployer-git自动部署发布工具<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure></p>
+<p>发布<br>测试没问题后，我们就生成静态网页文件发布至我们的服务器上。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure></p>
+<p>因为是发布至你的服务器，所以终端会让你输入ssh连接服务器的密码，正确输入后，骚等片刻，就会把你的博客上传服务器了。以后在每次把博客写完后，执行一下这个命令就可以直接发布了，So easy。</p>
+<p>此时，你的博客已经完成了，在浏览器中输入 服务器IP 就能够访问了。</p>
+<p>时间有限，这里只说到了简单的博客创建流程，还有很多很好玩的配置与插件。比如说评论、标签、统计等等。慢慢的完善你的专属博客吧。</p>
+<p>更多主题<br>更多插件<br>【持续更新】最全Hexo个人博客搭建+主题优化+插件配置：</p>
+<ul>
+<li><a href="https://www.simon96.online/2018/10/12/hexo-tutorial/" target="_blank" rel="noopener">https://www.simon96.online/2018/10/12/hexo-tutorial/</a></li>
+</ul>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        <li title="0" data-url="http://url.mcvmc.com/kuwo.php/27101590.mp3"></li>
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link" data-ae="false" data-ci="a015251c09fc28e8ffe3" data-cs="e97267f0861faffdb7dece1438080df13bb45dd3" data-r="cyclechang.github.io" data-o="cyclechang" data-a="cyclechang" data-d="true">查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>
